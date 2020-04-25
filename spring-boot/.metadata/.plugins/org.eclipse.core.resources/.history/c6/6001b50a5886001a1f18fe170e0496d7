@@ -1,0 +1,9 @@
+package com.algaworks.osworks.api.controller;
+
+public class ClienteController {
+
+		public String listar() {
+			return "teste";
+		}
+	
+}

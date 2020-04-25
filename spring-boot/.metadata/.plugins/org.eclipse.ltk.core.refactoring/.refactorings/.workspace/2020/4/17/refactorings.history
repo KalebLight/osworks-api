@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;osworks-api&apos;" deleteContents="false" description="Delete resource &apos;osworks-api&apos;" element1="/osworks-api" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1587749394090"/>
+</session>
