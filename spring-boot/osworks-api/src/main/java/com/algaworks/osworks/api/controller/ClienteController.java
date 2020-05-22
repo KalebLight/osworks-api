@@ -3,7 +3,6 @@ package com.algaworks.osworks.api.controller;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +20,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.algaworks.osworks.domain.model.Cliente;
 import com.algaworks.osworks.domain.repository.ClienteRepository;
+import com.algaworks.osworks.domain.service.CadastroClienteService;
+
 
 @RestController
 @RequestMapping("/clientes") //Faz com que tudo nesse controlador responda para '/clientes'
 public class ClienteController {		
 		@Autowired
 		private ClienteRepository clienteRepository;		
+
+		@Autowired
+		private CadastroClienteService cadastroCliente;
+		
 		@GetMapping
 		public List<Cliente> listar() {
 			return clienteRepository.findAll();
@@ -57,7 +62,7 @@ public class ClienteController {
 		@PostMapping
 		@ResponseStatus(HttpStatus.CREATED)
 		public Cliente adicionar(@Valid @RequestBody Cliente cliente){
-			return clienteRepository.save(cliente);
+			return cadastroCliente.salvar(cliente);
 		}
 
 		
@@ -69,7 +74,7 @@ public class ClienteController {
 			}
 			else {
 				cliente.setId(clienteId);
-				cliente = clienteRepository.save(cliente);
+				cliente = cadastroCliente.salvar(cliente);
 				return ResponseEntity.ok(cliente);
 			}
 		}
@@ -81,7 +86,7 @@ public class ClienteController {
 				return ResponseEntity.notFound().build();
 			}
 			else {
-				clienteRepository.deleteById(clienteId);
+				cadastroCliente.excluir(clienteId);
 				return ResponseEntity.noContent().build();
 			}			
 		}
