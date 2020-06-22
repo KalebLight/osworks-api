@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.osworks.api.exceptionhandler.EntidadeNaoEncontradaException;
+import com.algaworks.osworks.api.exceptionhandler.OdSSemComentarioException;
 import com.algaworks.osworks.domain.model.Comentario;
 import com.algaworks.osworks.domain.model.ComentarioInput;
 import com.algaworks.osworks.domain.model.ComentarioModel;
@@ -39,6 +40,10 @@ public class ComentarioController {
 	public List<ComentarioModel> listar(@PathVariable Long ordemServicoId){
 		OrdemServico ordemServico = ordemServicoRepository.findById(ordemServicoId).orElseThrow(() -> new EntidadeNaoEncontradaException("Ordem de serviço não encontrada"));
 		
+		if(ordemServico.getComentarios().isEmpty()) {
+			throw new OdSSemComentarioException("Esta ordem de serviço não possui comentários");
+			
+		}
 		return toCollectionModel(ordemServico.getComentarios());		
 	}
 	
